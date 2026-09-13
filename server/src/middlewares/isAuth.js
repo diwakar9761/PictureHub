@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 
 const isAuth = async (req, res, next) => {
-    
     try {
         let {token} = req.cookies
         if (!token) {
