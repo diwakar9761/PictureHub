@@ -18,3 +18,7 @@
     - Node - Backend
     
   ## Check the URL : https://client-alpha-swart.vercel.app/
+
+  ## Login Credentials:
+    - U: mehtadiwakar40@gmail.com
+    - P: Test
