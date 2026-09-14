@@ -125,7 +125,7 @@ const Profile = () => {
             <div className="flex flex-wrap gap-4 mt-4 text-sm text-gray-500">
               <div className="flex items-center gap-1.5">
                 <MapPin size={16} />
-                Delhi, India
+                {userData.location}
               </div>
 
               <div className="flex items-center gap-1.5">

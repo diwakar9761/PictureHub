@@ -363,7 +363,7 @@ const Feed = () => {
 
                 </div>
 
-                {allUsersData.filter((user) => user._id !== userData?._id).slice(0, 4).map((user) => (
+                {allUsersData?.filter((user) => user._id !== userData?._id).slice(0, 4).map((user) => (
                   <div
                     key={user._id}
                     className="flex items-center justify-between py-3"

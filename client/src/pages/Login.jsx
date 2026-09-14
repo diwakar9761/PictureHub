@@ -9,7 +9,7 @@ import logo from "../assets/logo.png";
 const Login = () => {
 
   const navigate = useNavigate();
-  const {setUserData} = useContext(userDataContext)
+  const {setUserData, allUsersData} = useContext(userDataContext)
 
   const loginUser = async (e) => {
     e.preventDefault()
@@ -28,6 +28,7 @@ const Login = () => {
           console.log(res);
         
           setUserData(res.data.user)
+          allUsersData([])
           toast(res.data.message);
           navigate("/");
           console.log("1", res.data.message);

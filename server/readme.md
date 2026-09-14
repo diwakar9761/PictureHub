@@ -1,9 +1,13 @@
-# Complete Project [instagram]
-## Register and Login the users
-## After user is logged in, he can create/edit/delete its post
-## feed page: all posts will be shown there which are created by any user.
-## my post: only user posts will be shown there
+# Complete Project [pictureHUB] - Idea from [Instagram]
+## Register and Login the user.
+
+## Feed/Home Page: All posts will be shown there which are created by any user.
+## My Profile Page: Only posts created by user will be shown there.
+## My Profile Page: User can edit and save his information i.e. profile image, username, location, bio...
+
+## User can follow/Unfollow any user.
 ## user can like/dislike any post with count
+## user can comment on any post
 
 
 # Complete Node process
@@ -15,7 +19,7 @@
     - create necessary folder and structure [config, controllers, middlewares, models, routes, services, utils]
     - create and run the express server
     - create and connect with the mongo DB with mongoose
-    - server should be running and connected with DB successfull
+    - server should be running and connected with DB successfully
 
 ## Create new API.
     - Create User Register API - username, email & password
@@ -23,13 +27,11 @@
         - hashing the password, validation user exists
     - Create User Login API
         - check email/username and password are matching, generate token, save token to cookie
-
-
-## Completed Functionality
-    - Get current user details - API in BE, contextAPI in react
-    - create a isAuth middle ware to add condition for dashboard and login/signup
-    - set values in cookies in browser -- done -- get token from cookies -- ???
-    - create one context api for auth API url
+    - Created User Logout API
+        - remove token from cookies
+    - Get current user data 
+    - Get all users data
+    - 
     
 
 ## TO-DO    
@@ -41,15 +43,15 @@
     - Edit profile 
         - open form
         - with all the user details in it
+        - including profile image
         - add and save all user detail
     - users
         - add profile picture
         - add headline/bio
-        - location
         - user post
+        - suggested users api, remove current user and all the users which user already in connection with.
     - posts
         - post modal
-            - image, caption, created date, likes, comments, created by user, 
+            - image, caption, created date, likes, comments, created by user, time of post creation, 
         - get all posts
         - get all posts of current user
-        - 

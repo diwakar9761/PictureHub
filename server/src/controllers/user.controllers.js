@@ -21,7 +21,6 @@ const getAllUsers = async (req, res) => {
         if (!allUsers) {
             res.status(400).json({message: "No users found!"});
         }
-        console.log(allUsers);
         res.status(200).json({message: "Users fetched successfully!", users: allUsers})
     } catch (error) {
         res.status(400).json({message: "Error in fetching all users"});

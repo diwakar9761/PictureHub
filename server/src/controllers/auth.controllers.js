@@ -42,7 +42,7 @@ const registerUser = async (req, res) => {
 // Login
 const loginUser = async (req, res) => {
     try {
-        const {email, userName, password} = req.body;
+    const {email, userName, password} = req.body;
 
         // check if user exists with email or username
         const loginUser = await userModel.findOne({
