@@ -8,7 +8,7 @@ const UserContext = ({ children }) => {
     const [allUsersData, setAllUsersData] = useState(null)
     const getCurrentUser = async () => {
         try {
-            let result = await axios.get("http://localhost:3000/api/user/currentUser", {withCredentials: true})
+            let result = await axios.get("https://picturehub-server.vercel.app/api/user/currentUser", {withCredentials: true})
             console.log(result.data)
             setUserData(result.data?.user)
         } catch (error) {
@@ -20,7 +20,7 @@ const UserContext = ({ children }) => {
 
     const getAllUsers = async () => {
         try {
-            let result = await axios.get("http://localhost:3000/api/user/getAllUsers", {withCredentials: true})
+            let result = await axios.get("https://picturehub-server.vercel.app/api/user/getAllUsers", {withCredentials: true})
             console.log(result.data)
             setAllUsersData(result.data?.users)
         } catch (error) {

@@ -23,7 +23,7 @@ const Login = () => {
     console.log(loginFormValues);
 
     try {
-      let res = await axios.post("http://localhost:3000/api/auth/login", loginFormValues, {withCredentials: true})
+      let res = await axios.post("https://picturehub-server.vercel.app/api/auth/login", loginFormValues, {withCredentials: true})
       if (res.status === 200) {
           console.log(res);
         

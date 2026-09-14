@@ -12,7 +12,7 @@ const app = express()
 
 // Middlewares
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: 'https://client-alpha-swart.vercel.app',
     credentials: true
 }))
 app.use(express.json())

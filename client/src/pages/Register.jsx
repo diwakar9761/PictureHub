@@ -23,7 +23,7 @@ const Register = () => {
     console.log(formResults);
 
     try {
-      const response = await axios.post("http://localhost:3000/api/auth/register", formResults)
+      const response = await axios.post("https://picturehub-server.vercel.app/api/auth/register", formResults)
       if (response.status === 201) {
         console.log(response);
         toast(response.data.message);
