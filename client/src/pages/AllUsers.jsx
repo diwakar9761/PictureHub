@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   Search,
   UserPlus,
@@ -6,108 +6,32 @@ import {
   MapPin,
   MoreHorizontal,
 } from "lucide-react";
+import { userDataContext } from "../context/UserContext.jsx";
+import placeholder from "../assets/placeholder.png"
+import { useNavigate } from "react-router-dom";
 
 const AllUsers = () => {
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
 
-  // Replace this with your API data
-  const users = [
-    {
-      id: 1,
-      name: "Diwakar Mehta",
-      username: "diwakarmehta",
-      image: "https://i.pravatar.cc/300?img=12",
-      bio: "Frontend Developer | React | Angular | JavaScript",
-      location: "Delhi, India",
-      followers: 1200,
-      following: 356,
-      isFollowing: false,
-    },
-    {
-      id: 2,
-      name: "Rahul Sharma",
-      username: "rahulsharma",
-      image: "https://i.pravatar.cc/300?img=11",
-      bio: "Full Stack Developer & Tech Enthusiast 🚀",
-      location: "Mumbai, India",
-      followers: 980,
-      following: 245,
-      isFollowing: true,
-    },
-    {
-      id: 3,
-      name: "Priya Singh",
-      username: "priyasingh",
-      image: "https://i.pravatar.cc/300?img=47",
-      bio: "UI/UX Designer | Creating beautiful experiences ✨",
-      location: "Bangalore, India",
-      followers: 2100,
-      following: 421,
-      isFollowing: false,
-    },
-    {
-      id: 4,
-      name: "Amit Verma",
-      username: "amitverma",
-      image: "https://i.pravatar.cc/300?img=13",
-      bio: "Software Engineer | MERN Stack | Open Source",
-      location: "Pune, India",
-      followers: 760,
-      following: 198,
-      isFollowing: false,
-    },
-    {
-      id: 5,
-      name: "Neha Kapoor",
-      username: "nehakapoor",
-      image: "https://i.pravatar.cc/300?img=44",
-      bio: "Product Designer | Photography | Travel 🌍",
-      location: "Gurgaon, India",
-      followers: 3400,
-      following: 512,
-      isFollowing: true,
-    },
-    {
-      id: 6,
-      name: "Vikas Gupta",
-      username: "vikasgupta",
-      image: "https://i.pravatar.cc/300?img=68",
-      bio: "React Developer | Building things for the web",
-      location: "Hyderabad, India",
-      followers: 890,
-      following: 301,
-      isFollowing: false,
-    },
-    {
-      id: 7,
-      name: "Ananya Sharma",
-      username: "ananyasharma",
-      image: "https://i.pravatar.cc/300?img=49",
-      bio: "Content Creator | Tech | Lifestyle",
-      location: "Jaipur, India",
-      followers: 5600,
-      following: 643,
-      isFollowing: false,
-    },
-    {
-      id: 8,
-      name: "Rohit Malhotra",
-      username: "rohitmalhotra",
-      image: "https://i.pravatar.cc/300?img=52",
-      bio: "Backend Engineer | Node.js | MongoDB",
-      location: "Chandigarh, India",
-      followers: 670,
-      following: 187,
-      isFollowing: false,
-    },
-  ];
+  const goToProfile = (id) => {
+    if (id) {
+      navigate(`/profile/${id}`);
+    } else {
+      navigate("/profile")
+    }
+  } 
 
-  const filteredUsers = users.filter((user) => {
+  // Replace this with your API data
+  const { allUsersData } = useContext(userDataContext);
+
+  const filteredUsers = allUsersData.filter((user) => {
     const text = search.toLowerCase();
 
     return (
-      user.name.toLowerCase().includes(text) ||
-      user.username.toLowerCase().includes(text) ||
+      user.firstName.toLowerCase().includes(text) ||
+      user.lastName.toLowerCase().includes(text) ||
+      user.userName.toLowerCase().includes(text) ||
       user.bio.toLowerCase().includes(text)
     );
   });
@@ -169,7 +93,7 @@ const AllUsers = () => {
 
                 {filteredUsers.map((user) => (
                   <div
-                    key={user.id}
+                    key={user._id}
                     className="group bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                   >
 
@@ -179,8 +103,8 @@ const AllUsers = () => {
                       {/* Avatar */}
                       <div className="p-0.5 rounded-full bg-linear-to-br from-indigo-600 via-purple-600 to-pink-500">
                         <img
-                          src={user.image}
-                          alt={user.name}
+                          src={user.profileImage || placeholder}
+                          alt={user.firstName}
                           className="w-20 h-20 rounded-full object-cover border-4 border-white"
                         />
                       </div>
@@ -195,11 +119,11 @@ const AllUsers = () => {
                     <div className="mt-4">
 
                       <h2 className="text-lg font-bold text-gray-900 truncate">
-                        {user.name}
+                        {user.firstName} {user.lastName}
                       </h2>
 
                       <p className="text-sm text-indigo-600 font-medium">
-                        @{user.username}
+                        @{user.userName}
                       </p>
 
                       <p className="text-sm text-gray-500 mt-3 line-clamp-2 min-h-10">
@@ -219,9 +143,9 @@ const AllUsers = () => {
 
                       <div>
                         <p className="font-bold text-gray-900">
-                          {user.followers >= 1000
-                            ? `${(user.followers / 1000).toFixed(1)}K`
-                            : user.followers}
+                          {user?.followers >= 1000
+                            ? `${(user?.followers / 1000).toFixed(1)}K`
+                            : user?.followers}
                         </p>
 
                         <p className="text-xs text-gray-400">
@@ -231,7 +155,7 @@ const AllUsers = () => {
 
                       <div>
                         <p className="font-bold text-gray-900">
-                          {user.following}
+                          {user?.following}
                         </p>
 
                         <p className="text-xs text-gray-400">
@@ -246,12 +170,12 @@ const AllUsers = () => {
 
                       <button
                         className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold transition ${
-                          user.isFollowing
+                          user?.isFollowing
                             ? "bg-indigo-50 text-indigo-600 hover:bg-indigo-100"
                             : "bg-linear-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 shadow-md"
                         }`}
                       >
-                        {user.isFollowing ? (
+                        {user?.isFollowing ? (
                           <>
                             <UserCheck size={16} />
                             Following
@@ -264,7 +188,7 @@ const AllUsers = () => {
                         )}
                       </button>
 
-                      <button className="px-4 py-2.5 rounded-xl border border-gray-200 text-gray-600 text-sm font-medium hover:bg-gray-50 transition">
+                      <button className="px-4 py-2.5 rounded-xl border border-gray-200 text-gray-600 text-sm font-medium hover:bg-gray-50 transition cursor-pointer" onClick={() => goToProfile(user._id)}>
                         View
                       </button>
 

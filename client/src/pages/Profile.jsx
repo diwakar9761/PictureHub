@@ -15,12 +15,18 @@ import axios from "axios";
 import ProfileEdit from "../components/ProfileEdit.jsx";
 import placeholder from "../assets/placeholder.png";
 import AddNewPost from "../components/AddNewPost.jsx";
+import { useParams } from "react-router-dom";
 
 const Profile = () => {
-
+  const { profileId } = useParams();
   const serverURL = import.meta.env.DEV ? "http://localhost:3000" : "https://picturehub-server.vercel.app"
-
-  const {userData} = useContext(userDataContext);
+  const { userData, allUsersData } = useContext(userDataContext);
+  let userProfile;
+  if (profileId) {
+    userProfile = allUsersData.find((user) => user._id === profileId)
+  } else {
+    userProfile = userData;
+  }
   
   const [posts, setPosts] = useState([])
   const [userPost, setUserPosts] = useState([])
@@ -32,7 +38,7 @@ const Profile = () => {
 
     if (allPosts.status === 200) {    
       setPosts(allPosts.data.posts);
-      let userPosts = allPosts.data.posts.filter((post) => post.createdBy?._id === userData._id)
+      let userPosts = allPosts.data.posts.filter((post) => post.createdBy?._id === userProfile._id)
       setUserPosts(userPosts);
       console.log('current user post', userPost)
     } else {
@@ -59,7 +65,7 @@ const Profile = () => {
 
             {/* Cover */}
             <div className="h-48 bg-linear-to-r from-indigo-300 via-purple-300 to-pink-300 relative">
-              <button className="absolute top-5 right-5 bg-white/90 hover:bg-white text-gray-700 p-2 rounded-full shadow-lg transition cursor-pointer" onClick={() => setProfilePopup(true)}>
+              <button className={`absolute top-5 right-5 bg-white/90 hover:bg-white text-gray-700 p-2 rounded-full shadow-lg transition cursor-pointer ${profileId ? "hidden" : ""} `} onClick={() => setProfilePopup(true)}>
                 <Settings size={20} />
               </button>
             </div>
@@ -73,19 +79,19 @@ const Profile = () => {
                 <div className="-mt-16 relative">
                   <div className="w-32 h-32 rounded-full p-1 bg-linear-to-br from-indigo-600 via-purple-600 to-pink-500">
                     <img
-                      src={userData.profileImage || placeholder}
+                      src={userProfile.profileImage || placeholder}
                       alt="Profile"
                       className="w-full h-full rounded-full object-cover border-4 border-white"
                     />
                   </div>
 
                   {/* Camera button */}
-                  <button className="absolute bottom-2 right-1 bg-linear-to-br from-indigo-600 to-purple-600 text-white p-2 rounded-full border-4 border-white shadow-md hover:scale-105 transition cursor-pointer" onClick={() => setProfilePopup(true)}>
+                  <button className={`absolute bottom-2 right-1 bg-linear-to-br from-indigo-600 to-purple-600 text-white p-2 rounded-full border-4 border-white shadow-md hover:scale-105 transition cursor-pointer ${profileId ? "hidden" : ""}`} onClick={() => setProfilePopup(true)}>
                     <Camera size={16} />
                   </button>
                 </div>
 
-                <div className="flex gap-4">
+                <div className={`flex gap-4 ${profileId ? "hidden" : ""}`}>
                   {/* Edit Profile */}
                 <button className="mt-4 md:mt-0 flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 font-medium shadow-sm transition cursor-pointer" onClick={() => setProfilePopup(true)}>
                   <Edit size={17} />
@@ -93,7 +99,7 @@ const Profile = () => {
                 </button>
 
                 {/* Add Post */}
-                <button className="mt-4 md:mt-0 flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 font-medium shadow-sm transition cursor-pointer" onClick={() => setCreatePostPopup(true)}>
+                <button className="mt-4 md:mt-0 flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-gray-200 bg-linear-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 font-medium shadow-sm transition cursor-pointer" onClick={() => setCreatePostPopup(true)}>
                   <Edit size={17} />
                   Add new post
                 </button>
@@ -103,24 +109,24 @@ const Profile = () => {
               {/* Name */}
               <div className="mt-5">
                 <h1 className="text-2xl font-bold text-gray-900">
-                  {userData.firstName} {userData.lastName}
+                  {userProfile.firstName} {userProfile.lastName}
                 </h1>
 
                 <p className="text-gray-500 mt-1">
-                  @{userData.userName}
+                  @{userProfile.userName}
                 </p>
               </div>
 
               {/* Bio */}
               <p className="text-gray-600 mt-4 max-w-2xl leading-relaxed">
-                {userData.bio}
+                {userProfile.bio}
               </p>
 
               {/* Profile Details */}
               <div className="flex flex-wrap gap-4 mt-4 text-sm text-gray-500">
                 <div className="flex items-center gap-1.5">
                   <MapPin size={16} />
-                  {userData.location}
+                  {userProfile.location}
                 </div>
 
                 <div className="flex items-center gap-1.5">

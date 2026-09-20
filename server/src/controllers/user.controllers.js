@@ -31,14 +31,21 @@ const updateUser = async (req, res) => {
     const {firstName, lastName, bio} = req.body;
 
     try {
-        const uploadedFile = await uploadFile(req.file.buffer, req.file.originalname, "profileImage");
-        const user = await userModel.findOneAndUpdate({_id: req.userId}, { firstName: firstName, lastName: lastName, bio: bio, profileImage: uploadedFile.url }, {new: true});
+        let user;
+        if (req.file) {
+            const uploadedFile = await uploadFile(req.file.buffer, req.file.originalname, "profileImage");
+            user = await userModel.findOneAndUpdate({_id: req.userId}, { firstName: firstName, lastName: lastName, bio: bio, profileImage: uploadedFile.url }, {new: true});
+        } else {
+            user = await userModel.findOneAndUpdate({_id: req.userId}, { firstName: firstName, lastName: lastName, bio: bio }, {new: true});
+        }
+
         if (!user) {
             res.status(400).json({message: "No users found!"});
         }
+
         res.status(200).json({message: "User updated successfully!", user: user})        
     } catch (error) {
-        res.status(400).json({message: "Error in updating the user!"});
+        res.status(400).json({message: "Error in updating the user!", error: error});
     }
 }
 

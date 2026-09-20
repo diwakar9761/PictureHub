@@ -37,8 +37,12 @@ const Feed = () => {
     }
   };
 
-  const navigateToProfile = () => {
-    navigate("/profile");
+  const navigateToProfile = (id) => {
+    if (id) {
+      navigate(`/profile/${id}`);
+    } else {
+      navigate("/profile")
+    }
   };
 
   const navigateToAllUsers = () => {
@@ -58,7 +62,7 @@ const Feed = () => {
           <main className="max-w-3xl w-full mx-auto lg:mx-0">
             {/* Stories */}
             <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-xl p-5 mb-6">
-              <div className="flex gap-5 overflow-x-auto pb-1 scrollbar-hide">
+              <div className="flex gap-5 overflow-x-auto pb-1 scrollbar-hide scrollbar-none">
                 {/* Current User */}
                 <div
                   key={userData._id}
@@ -101,27 +105,18 @@ const Feed = () => {
                         <div className="relative">
                           {/* Story Ring */}
                           <div
-                            className={`w-16.5 h-16.5 rounded-full p-0.75 ${
-                              user?.id == userData?._id
-                                ? "bg-gray-200"
-                                : "bg-linear-to-tr from-yellow-400 via-pink-500 to-purple-600"
-                            }`}
+                            className={`w-16.5 h-16.5 rounded-full p-0.75 bg-linear-to-tr from-yellow-400 via-pink-500 to-purple-600`}
                           >
                             <div className="w-full h-full rounded-full bg-white p-0.5">
-                              <img
-                                src={user.profileImage || placeholder}
-                                alt={user.firstName}
-                                className="w-full h-full rounded-full object-cover"
-                              />
+                              <a onClick={() => navigateToProfile(user._id)}>
+                                <img
+                                  src={user.profileImage || placeholder}
+                                  alt={user.firstName}
+                                  className="w-full h-full rounded-full object-cover"
+                                />
+                              </a>
                             </div>
                           </div>
-
-                          {/* Add Story */}
-                          {user?.id == userData?._id && (
-                            <div className="absolute bottom-0 right-0 w-6 h-6 rounded-full bg-indigo-600 border-2 border-white flex items-center justify-center">
-                              <Plus size={13} className="text-white" />
-                            </div>
-                          )}
                         </div>
 
                         <p className="text-xs text-gray-600 mt-2 truncate max-w-17.5 capitalize">
@@ -278,7 +273,7 @@ const Feed = () => {
 
                 <button
                   type="button"
-                  onClick={navigateToProfile}
+                  onClick={() => navigateToProfile()}
                   className="w-full mt-5 py-2.5 rounded-xl bg-linear-to-r from-indigo-600 to-purple-600 text-white text-sm font-semibold hover:shadow-lg transition cursor-pointer hover:from-purple-600 hover:to-indigo-600"
                 >
                   View Profile
@@ -320,7 +315,7 @@ const Feed = () => {
                   </button>
                 </div>
 
-                {allUsersData
+                {[...(allUsersData || [])]
                   ?.filter((user) => user._id !== userData?._id)
                   .slice(0, 4)
                   .map((user) => (
@@ -329,11 +324,13 @@ const Feed = () => {
                       className="flex items-center justify-between py-3"
                     >
                       <div className="flex items-center gap-3">
-                        <img
-                          src="https://i.pravatar.cc/150?img=2"
-                          alt={user.userName}
-                          className="w-10 h-10 rounded-full object-cover"
-                        />
+                        <a onClick={() => navigateToProfile(user._id)}>
+                          <img
+                            src={user.profileImage || placeholder}
+                            alt={user.userName}
+                            className="w-10 h-10 rounded-full object-cover"
+                          />
+                        </a>
 
                         <div>
                           <p className="text-sm font-semibold text-gray-800 capitalize">

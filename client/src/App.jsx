@@ -18,6 +18,7 @@ const App = () => {
         <Route path="/" element={userData ? <Feed /> : <Navigate to="/login" />} />
         <Route path="*" element={userData ? <Feed /> : <Navigate to="/login" />} />
         <Route path="/profile" element={userData ? <Profile /> : <Navigate to="/login" />} />
+        <Route path="/profile/:profileId" element={userData ? <Profile /> : <Navigate to="/login" />} />
         <Route path="/users" element={userData ? <AllUsers /> : <Navigate to="/login" />} />
       </Routes>
   )

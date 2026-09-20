@@ -28,8 +28,7 @@ const userSchema = new mongoose.Schema({
         default: "Delhi, India"
     },
     profileImage: {
-        type: String,
-        default: ""
+        type: String
     },
     bio: {
         type: String

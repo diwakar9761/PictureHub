@@ -18,7 +18,9 @@ const ProfileEdit = ({ onClosePopup }) => {
       const [profileBio, setProfileBio] = useState(userData.bio);
 
       const formData = new FormData();
-      formData.append("profileImage", profileImage)
+      if (profileImage) {
+        formData.append("profileImage", profileImage)
+      }
       formData.append("firstName", firstName)
       formData.append("lastName", lastName)
       formData.append("bio", profileBio)
@@ -41,7 +43,7 @@ const ProfileEdit = ({ onClosePopup }) => {
       <div className="flex items-center justify-center p-4">
         {/* Login Card */}
         <div className="w-180">
-          <div className="bg-white backdrop-blur-xl rounded-3xl shadow-2xl p-8 sm:p-10 h-screen mb-9 overflow-scroll">
+          <div className="bg-white backdrop-blur-xl rounded-3xl shadow-2xl p-8 sm:p-10 max-h-screen mb-9 overflow-auto">
             {/* Heading */}
             <div className="mb-8 relative">
               <h1 className="text-3xl font-bold text-gray-900">Edit Profile</h1>
