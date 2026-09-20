@@ -17,10 +17,11 @@ const Header = () => {
 
   const navigate = useNavigate();
   const {userData, setUserData} = useContext(userDataContext)
+  const serverURL = import.meta.env.DEV ? "http://localhost:3000" : "https://picturehub-server.vercel.app"
   const logout = async () => {
     console.log("user is trying to logout");
     try {
-      let res = await axios.get("https://picturehub-server.vercel.app/api/auth/logout", {withCredentials: true})
+      let res = await axios.get(`${serverURL}/api/auth/logout`, {withCredentials: true})
       if (res.status === 200) {
         setUserData(null);
         toast(res.data.message);

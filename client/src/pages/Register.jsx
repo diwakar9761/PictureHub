@@ -3,13 +3,20 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom"
 import { toast } from 'sonner';
 import logo from "../assets/logo.png";
+import { useContext } from "react";
+import { LoaderDataContext } from "../context/LoaderContext";
 
 const Register = () => {
 
+  const serverURL = import.meta.env.DEV ? "http://localhost:3000" : "https://picturehub-server.vercel.app"
+
   const navigate = useNavigate()
+
+  const {setLoader} = useContext(LoaderDataContext);
 
   const registerUser = async (e) => {
     e.preventDefault();
+    setLoader(true)
     const formData = new FormData(e.target)
 
     formData.get("firstName");
@@ -20,18 +27,19 @@ const Register = () => {
 
     const formResults = Object.fromEntries(formData.entries());
 
-    console.log(formResults);
-
     try {
-      const response = await axios.post("https://picturehub-server.vercel.app/api/auth/register", formResults)
+      const response = await axios.post(`${serverURL}/api/auth/register`, formResults)
       if (response.status === 201) {
+        setLoader(false)
         console.log(response);
         toast(response.data.message);
         navigate("/login");
       } else {
+        setLoader(false)
         console.log("Something went wrong! Try again");
       }
     } catch (error) {
+      setLoader(false)
       console.log(error);
     }
 

@@ -4,6 +4,8 @@ import cookieParser from "cookie-parser";
 import connectDB from "./config/db.config.js";
 import authRouter from "./routes/auth.route.js";
 import userRoute from "./routes/user.route.js";
+import postRouter from "./routes/post.route.js";
+
 
 // DB connection
 connectDB();
@@ -20,6 +22,7 @@ app.use(cookieParser())
 
 app.use("/api/auth", authRouter)
 app.use("/api/user", userRoute)
+app.use("/api/post", postRouter)
 
 
 export default app

@@ -1,5 +1,5 @@
-import jwt from "jsonwebtoken";
 import userModel from "../models/user.model.js";
+import uploadFile from "../config/uploadImage.js";
 
 const getCurrentUser = async (req, res) => {
     try {
@@ -27,4 +27,19 @@ const getAllUsers = async (req, res) => {
     }
 }
 
-export {getCurrentUser, getAllUsers}
+const updateUser = async (req, res) => {
+    const {firstName, lastName, bio} = req.body;
+
+    try {
+        const uploadedFile = await uploadFile(req.file.buffer, req.file.originalname, "profileImage");
+        const user = await userModel.findOneAndUpdate({_id: req.userId}, { firstName: firstName, lastName: lastName, bio: bio, profileImage: uploadedFile.url }, {new: true});
+        if (!user) {
+            res.status(400).json({message: "No users found!"});
+        }
+        res.status(200).json({message: "User updated successfully!", user: user})        
+    } catch (error) {
+        res.status(400).json({message: "Error in updating the user!"});
+    }
+}
+
+export {getCurrentUser, getAllUsers, updateUser}

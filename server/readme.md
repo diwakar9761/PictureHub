@@ -23,38 +23,12 @@
     - create and run the express server
     - create and connect with the mongo DB with mongoose
     - server should be running and connected with DB successfully
-
-## Create new API.
-    - Create User Register API - username, email & password
-    - Create user model and user controller
-        - hashing the password, validation user exists
-    - Create User Login API
-        - check email/username and password are matching, generate token, save token to cookie
-    - Created User Logout API
-        - remove token from cookies
-    - Get current user data 
-    - Get all users data
-    - 
     
 
-## TO-DO    
-    - get form data by using "useState" hook not with formData [this only we use with file upload]
-    - Find 3 - 4 small react projects, 1 - 2 big angular project for interview.
-    - add loader in signup and login buttons
-    - set error in case of aPI failure
-    - make every section in feed a different component - work on code splitting.
-    - Edit profile 
-        - open form
-        - with all the user details in it
-        - including profile image
-        - add and save all user detail
-    - users
-        - add profile picture
-        - add headline/bio
-        - user post
-        - suggested users api, remove current user and all the users which user already in connection with.
+## TO-DO
     - posts
         - post modal
-            - image, caption, created date, likes, comments, created by user, time of post creation, 
-        - get all posts
-        - get all posts of current user
+            - likes, comments... 
+            - work on time of post
+
+    - make every section in feed a different component - work on code splitting and optimization process

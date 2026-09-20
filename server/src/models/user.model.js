@@ -26,10 +26,16 @@ const userSchema = new mongoose.Schema({
     location: {
         type: String,
         default: "Delhi, India"
+    },
+    profileImage: {
+        type: String,
+        default: ""
+    },
+    bio: {
+        type: String
     }
 })
 
 const userModel = mongoose.model("user", userSchema)
-
 
 export default userModel;
